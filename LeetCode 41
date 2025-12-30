@@ -1,0 +1,44 @@
+class Solution {
+    public int firstMissingPositive(int[] nums) {
+        int n = nums.length;
+        int contains = 0;           // for checking corner case if 1 is there or not
+
+        for(int i = 0; i<n ; i++){  // if found 1 so dont check for 1 anymore and proceed to 16 code line
+            if(nums[i] == 1){
+                contains++;
+                break;
+            }
+        }
+        if(contains == 0){          // if there exists no 1 so output is 1
+            return 1;
+        }
+
+        for(int i =0; i<n; i++){    // checks the 3 unwanted conditions and replace them with 1 <data cleanup>        
+            if(nums[i] <= 0 || nums[i] > n){
+                nums[i] = 1;
+            }
+        }
+
+        for(int i = 0; i<n; i++){
+            int a = Math.abs(nums[i]);         // for no conflict of  multiple negatives
+
+            if(a == n){                        // if theres element of same size of nums so 0th = -ve
+                nums[0] = -(Math.abs(nums[0]));
+            }
+            else{                              // else converet all the element to -ve 
+                nums[a] = -(Math.abs(nums[a]));
+            }
+        }
+        
+        for(int i = 1; i<n ; i++){
+            if(nums[i] > 0){
+                return i;
+            }
+        }
+        if(nums[0] > 0){
+            return n;
+        }
+
+        return n+1;
+    }
+}
